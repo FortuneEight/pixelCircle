@@ -17,7 +17,7 @@ function setup() {
     initialize();
     createCanvas(gridWidth, gridWidth);
     frameRate(1 / 5);
-    // noLoop();
+    noLoop();
 }
 
 function draw() {
