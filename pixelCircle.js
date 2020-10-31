@@ -4,20 +4,43 @@ const colorCenter = "yellow";
 const colorCircumference = "red";
 
 let strokeGridWeight, gridWidth, cellNumber, cellSize, pieDiv;
+let btns;
+let canvas;
 
 function initialize() {
     strokeGridWeight = 1;
     gridWidth = 900;
-    cellNumber = 3;
+    cellNumber = 7;
     cellSize = gridWidth / cellNumber;
     pieDiv = createDiv().style('font-size', '18pt');
+    createButtons(btns);
+}
+
+function createButtons(buttons) {
+    buttons = [];
+    buttons[0] = createButton('3').style('font-size: 30pt; width: 100px; background-color: #FF0000;');
+    buttons[1] = createButton('7').style('font-size: 30pt; width: 100px; background-color: #DD0022;');
+    buttons[2] = createButton('15').style('font-size: 30pt; width: 100px; background-color: #BB0044;');
+
+    buttons[0].position(gridWidth + 20, 20);
+    buttons[1].position(gridWidth + 20, 80);
+    buttons[2].position(gridWidth + 20, 140);
+
+
+    // buttons[0].mousePressed(buttonPressed);
+    // buttons[1].mousePressed(buttonPressed(7));
+    // buttons[2].mousePressed(buttonPressed(15));
 }
 
 function setup() {
     initialize();
-    createCanvas(gridWidth, gridWidth);
+    canvas = createCanvas(gridWidth, gridWidth);
     frameRate(1 / 5);
-    noLoop();
+    // noLoop();
+}
+
+function test() {
+    console.log('hi there lol');
 }
 
 function draw() {
