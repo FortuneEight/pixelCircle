@@ -31,7 +31,7 @@ function createButtons(buttons, buttonLabels, buttonColors) {
                                                             background-color: ${buttonColors[i]}`);
         buttons[i].position(gridWidth + spacingHorizontal, 2 * spacingVertical * i);
         buttons[i].id(i);
-        let btnID = i;
+        // let btnID = i;
         document.getElementById(i).onclick = function() { btnClicked(i) };
     }
 }
