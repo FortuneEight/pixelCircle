@@ -2,45 +2,57 @@ const colorFill = "black";
 const colorGridStroke = "white";
 const colorCenter = "yellow";
 const colorCircumference = "red";
+const btnLabels = ['3', '7', '15', '31', '63', '127', '255', '511', '1023'];
+const btnColors = ['#FF0000', '#DD0022', '#BB0044', '#880066', '#660088', '#440066', '220088', '0000BB', '0000FF'];
 
 let strokeGridWeight, gridWidth, cellNumber, cellSize, pieDiv;
-let btns;
+let btnArray;
 let canvas;
 
 function initialize() {
     strokeGridWeight = 1;
-    gridWidth = 900;
-    cellNumber = 7;
+    gridWidth = 1024;
+    cellNumber = 3;
     cellSize = gridWidth / cellNumber;
     pieDiv = createDiv().style('font-size', '18pt');
-    createButtons(btns);
+    createButtons(btnArray, btnLabels, btnColors);
 }
 
-function createButtons(buttons) {
+function createButtons(buttons, buttonLabels, buttonColors) {
     buttons = [];
-    buttons[0] = createButton('3').style('font-size: 30pt; width: 100px; background-color: #FF0000;');
-    buttons[1] = createButton('7').style('font-size: 30pt; width: 100px; background-color: #DD0022;');
-    buttons[2] = createButton('15').style('font-size: 30pt; width: 100px; background-color: #BB0044;');
 
-    buttons[0].position(gridWidth + 20, 20);
-    buttons[1].position(gridWidth + 20, 80);
-    buttons[2].position(gridWidth + 20, 140);
+    const spacingHorizontal = 20;
+    const spacingVertical = 20;
+
+    for (let i = 0; i < buttonLabels.length; i++) {
+
+        buttons[i] = createButton(buttonLabels[i]).style(`font-size: 18pt;
+                                                            width: 100px;
+                                                            background-color: ${buttonColors[i]}`);
+        buttons[i].position(gridWidth + spacingHorizontal, 2 * spacingVertical * i);
+        buttons[i].id(i);
+        // let btnID = i;
+        document.getElementById(i).onclick = function() { btnClicked(i) };
+    }
+}
+
+function btnClicked(buttonID) {
+    cellNumber = 2 ** (buttonID + 2) - 1;
+    cellSize = gridWidth / cellNumber;
+    if (cellNumber > 500) {
+        strokeGridWeight = 0;
+    } else {
+        strokeGridWeight = 1;
+    }
 
 
-    // buttons[0].mousePressed(buttonPressed);
-    // buttons[1].mousePressed(buttonPressed(7));
-    // buttons[2].mousePressed(buttonPressed(15));
+    loop();
 }
 
 function setup() {
     initialize();
     canvas = createCanvas(gridWidth, gridWidth);
-    frameRate(1 / 5);
-    // noLoop();
-}
-
-function test() {
-    console.log('hi there lol');
+    frameRate();
 }
 
 function draw() {
@@ -54,8 +66,7 @@ function draw() {
     squCtr(0, 0, cellSize, cellNumber);
     drawCircle(cellNumber, cellSize);
     output();
-    cellNumber = 2 * cellNumber + 1;
-    cellSize = gridWidth / cellNumber;
+    noLoop();
 }
 
 function drawGrid(cWidth, cNum) {
@@ -88,5 +99,5 @@ function drawCircle(cNum, cWidth) {
 }
 
 function output() {
-    pieDiv.html(`${sp(43)}Diameter: ${cellNumber} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
+    pieDiv.html(`${sp(55)}Diameter: ${cellNumber} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
 }
